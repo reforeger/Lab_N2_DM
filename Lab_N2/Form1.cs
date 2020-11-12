@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualBasic;
-using OpenQA.Selenium.Opera;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,7 +20,7 @@ namespace Lab_N2
         {
             InitializeComponent();
 
-            Icon = new Icon(@"..\..\Properties\test.ico");
+            //Icon = new Icon(@"..\..\Properties\test.ico");
 
             btn = new Button();
             btn.Text = "Vajuta siia";
@@ -64,7 +63,8 @@ namespace Lab_N2
 
         private void menuitem1_Pen(object sender, EventArgs e)
         {
-            Icon = new Icon(@"..\..\Properties\test.ico");
+            Icon icon = new Icon(@"..\..\Properties\test.ico");
+            
         }
 
         private void menuitem1_Reno(object sender, EventArgs e)
