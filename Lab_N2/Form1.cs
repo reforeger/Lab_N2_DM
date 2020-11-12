@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualBasic;
+using OpenQA.Selenium.Opera;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,6 +21,7 @@ namespace Lab_N2
         {
             InitializeComponent();
 
+            Icon = new Icon(@"..\..\Properties\test.ico");
 
             btn = new Button();
             btn.Text = "Vajuta siia";
@@ -38,18 +40,41 @@ namespace Lab_N2
             
             MainMenu menu = new MainMenu();
             MenuItem menuitem1 = new MenuItem("File");
-            menuitem1.MenuItems.Add("New", new EventHandler(menuitem1_New));
-            menuitem1.MenuItems.Add("Open", new EventHandler(menuitem1_Open));
-            menuitem1.MenuItems.Add("Save", new EventHandler(menuitem1_Save));
-            menuitem1.MenuItems.Add("Exit", new EventHandler(menuitem1_Exit));
+            menuitem1.MenuItems.Add("New    Ctrl + N", new EventHandler(menuitem1_About));
+            menuitem1.MenuItems.Add("Open   F3", new EventHandler(menuitem1_Open));
+            menuitem1.MenuItems.Add("Save    F2", new EventHandler(menuitem1_Save));
+            menuitem1.MenuItems.Add("Exit     alt + F4", new EventHandler(menuitem1_Exit));
             MenuItem menuitem2 = new MenuItem("Edit");
-            MenuItem menuitem3 = new MenuItem("Help");
+            menuitem2.MenuItems.Add("Undo               Ctrl + Z", new EventHandler(menuitem1_Undo));
+            menuitem2.MenuItems.Add("Reno   Ctrl + Shift + Z", new EventHandler(menuitem1_Reno));
+            menuitem2.MenuItems.Add("Pen", new EventHandler(menuitem1_Pen));
+            ToolStripMenuItem menuItem4 = new ToolStripMenuItem("Opera");
+            
 
+            MenuItem menuitem3 = new MenuItem("Help");
+            menuitem3.MenuItems.Add("About F1", new EventHandler(menuitem1_About));
 
             menu.MenuItems.Add(menuitem1);
             menu.MenuItems.Add(menuitem2);
             menu.MenuItems.Add(menuitem3);
             Menu = menu;
+            
+            
+        }
+
+        private void menuitem1_Pen(object sender, EventArgs e)
+        {
+            Icon = new Icon(@"..\..\Properties\test.ico");
+        }
+
+        private void menuitem1_Reno(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void menuitem1_Undo(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private void menuitem1_Save(object sender, EventArgs e)
@@ -61,11 +86,6 @@ namespace Lab_N2
         {
             throw new NotImplementedException();
         }
-
-        private void menuitem1_New(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
         private void menuitem1_Exit(object sender, EventArgs e)
         {
             if (MessageBox.Show("Kas oled kindel", "Küsimus", MessageBoxButtons.YesNo) == DialogResult.Yes)
@@ -73,6 +93,16 @@ namespace Lab_N2
                 Dispose();
             }
         }
+
+
+
+        private void menuitem1_About(object sender, EventArgs e)
+        {
+
+        }
+
+
+
 
         private void Btn_Click(object sender, EventArgs e)
         {
