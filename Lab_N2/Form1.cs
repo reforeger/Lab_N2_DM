@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualBasic;
+﻿using Amazon.SimpleWorkflow.Model;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,12 +23,32 @@ namespace Lab_N2
         int y = -1;
         bool moving = false;
         Pen pen;
+        Color historyColor;
+        List<Image> History;
+        
         public Form1()
         {
-            InitializeComponent();
+            historyColor = new Color();
+            History = new List<Image>();
 
+            panel1 = new Panel();
+            panel1.Width = 10000;
+            panel1.Height = 10000;
             g = panel1.CreateGraphics();
             pen = new Pen(Color.Black, 5);
+
+
+            
+
+            
+
+            panel1.BackColor = Color.LightBlue;
+            panel1.Dock = DockStyle.Fill;
+            
+            panel1.MouseDown += panel1_MouseDown;
+            panel1.MouseMove += panel1_MouseMove;
+            panel1.MouseUp += panel1_MouseUp;
+
 
 
             Icon = new Icon(@"..\..\Properties\test.ico");
@@ -40,21 +61,18 @@ namespace Lab_N2
 
             tr1 = new TrackBar();
             tr1.Width = 225;
-            tr1.Location = new Point(550,370);
+            
+            tr1.Dock = DockStyle.Bottom;
             tr1.Minimum = 10;
             tr1.Maximum = 500;
             //tr1.Value += new (tr_ValueChanged);
 
 
-            panel1 = new Panel();
-            panel1.Size = new Size(400, 100);
-            panel1.Location = new Point(100, 370);
-            
-            
 
+
+            
             Controls.Add(tr1);
             Controls.Add(panel1);
-
 
             MainMenu menu = new MainMenu();
             MenuItem menuitem1 = new MenuItem("File");
@@ -67,6 +85,7 @@ namespace Lab_N2
 
             
             menuitem1.MenuItems.Add("New    Ctrl + N", new EventHandler(menuitem1_New));
+            menuitem1.MenuItems.Add("Refresh Ctrl + F5", new EventHandler(menuitem1_Refresh));
             menuitem1.MenuItems.Add("Open   F3", new EventHandler(menuitem1_Open));
             menuitem1.MenuItems.Add("Save    F2", new EventHandler(menuitem1_Save));
             menuitem1.MenuItems.Add("Exit     alt + F4", new EventHandler(menuitem1_Exit));
@@ -106,11 +125,11 @@ namespace Lab_N2
 
         }
 
-        private void pictureBox_Click(object sender, EventArgs e)
+        private void menuitem1_Refresh(object sender, EventArgs e)
         {
-            PictureBox p = (PictureBox)sender;
-            pen.Color = p.BackColor;
+            panel1.Refresh();
         }
+
 
         private void panel1_MouseDown(object sender, MouseEventArgs e)
         {
@@ -121,9 +140,11 @@ namespace Lab_N2
 
         private void panel1_MouseMove(object sender, MouseEventArgs e)
         {
-            if(moving && x!=-1 && y != -1)
+            if(moving && x!=-1 && y!= -1)
             {
                 g.DrawLine(pen, new Point(x, y), e.Location);
+                x = e.X;
+                y = e.Y;
             }
         }
         private void panel1_MouseUp(object sender, MouseEventArgs e)
@@ -163,10 +184,6 @@ namespace Lab_N2
             Form2 f2 = new Form2();
             f2.ShowDialog();
         }
-        private void menuitem5_asds(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
 
         private void menuitem1_New(object sender, EventArgs e)
         {
@@ -187,12 +204,11 @@ namespace Lab_N2
 
         private void menuitem1_Reno(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            
         }
 
         private void menuitem1_Undo(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
         }
 
         private void menuitem1_Save(object sender, EventArgs e)

@@ -12,12 +12,17 @@ namespace Lab_N2
 {
     public partial class Form2 : Form
     {
+        PictureBox Picb;
         public Form2()
         {
-            InitializeComponent();
 
             Text = "Colors";
             Icon = new Icon(@"..\..\Properties\test.ico");
+
+            Picb = new PictureBox();
+            Picb.Location = new Point(50, 50);
+            Picb.BackColor = Color.DarkCyan;
+            Picb.Size = new Size(300, 300);
 
             MainMenu menu = new MainMenu();
             MenuItem menuitem1 = new MenuItem("File");
