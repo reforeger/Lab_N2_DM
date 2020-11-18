@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace Lab_N2
 {
-    public partial class Form1 : Form2
+    public partial class Form1 : Form
     {
         NotifyIcon ico;
         Graphics g;
@@ -181,7 +181,7 @@ namespace Lab_N2
 
         private void menuitem1_Pen1(object sender, EventArgs e)
         {
-            Form2 f2 = new Form2();
+            Form3 f2 = new Form3();
             f2.ShowDialog();
         }
 
