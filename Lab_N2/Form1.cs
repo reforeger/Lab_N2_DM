@@ -42,7 +42,7 @@ namespace Lab_N2
 
             
 
-            panel1.BackColor = Color.LightBlue;
+            panel1.BackColor = Color.White;
             panel1.Dock = DockStyle.Fill;
             
             panel1.MouseDown += panel1_MouseDown;
