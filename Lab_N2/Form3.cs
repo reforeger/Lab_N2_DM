@@ -13,6 +13,8 @@ namespace Lab_N2
     public partial class Form3 : Form
     {
         PictureBox Picb, Picb2, Picb3, Picb4, Picb5, Picb6, Picb7, Picb8, Picb9, Picb10;
+        TextBox textBox1;
+        Color colorResult;
         public Form3()
         {
             Text = "Colors";
@@ -86,6 +88,14 @@ namespace Lab_N2
             Picb10.BackColor = Color.DarkKhaki;
 
 
+
+            textBox1 = new TextBox();
+            textBox1.BackColor = Color.Cyan;
+            textBox1.Location = new Point(700, 500);
+            textBox1.Size = new Size(150, 150);
+            Controls.Add(textBox1);
+
+
             Controls.Add(Picb2);
             Controls.Add(Picb3);
             Controls.Add(Picb4);
@@ -95,12 +105,30 @@ namespace Lab_N2
             Controls.Add(Picb8);
             Controls.Add(Picb9);
             Controls.Add(Picb10);
+            Controls.Add(textBox1);
             Controls.Add(Picb);
+
+
+            //Scroll_Red.Tag = numeric_Red;
+
+
         }
 
+        /*private void Scroll_Red_ValueChanged(object sender, EventArgs e)
+        {
+            ScrollBar scrollBar = (ScrollBar)sender;
+            NumericUpDown numericUpDown = (NumericUpDown)scrollBar.Tag;
+            numericUpDown.Value = ScrollBar.Value;
+        }
+        private void UpdateColor()
+        {
+            colorResult = Color.FromArgb(Scroll_Red.Value, Scroll_Green.Value,
+                Scroll_Blue.Value);
+            picResultColor.BackColor = colorResult;
+        }*/
         private void Picb2_MouseClick(object sender, MouseEventArgs e)
         {
-            Pen pen = new Pen(Color.Blue, 5);
+            
         }
     }
 }

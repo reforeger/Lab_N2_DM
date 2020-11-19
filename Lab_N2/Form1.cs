@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -17,7 +18,7 @@ namespace Lab_N2
     {
         NotifyIcon ico;
         Graphics g;
-        TrackBar tr1;
+        TrackBar tr1, tr2, tr3;
         Panel panel1;
         int x = -1;
         int y = -1;
@@ -25,9 +26,15 @@ namespace Lab_N2
         Pen pen;
         Color historyColor;
         List<Image> History;
+        TextBox TextBox1;
+        
+        int r = 0, v= 0, b = 0;
+        
         
         public Form1()
         {
+            Bitmap pic = new Bitmap(750, 500);
+            picDrawingSurface.Image = pic;
             historyColor = new Color();
             History = new List<Image>();
 
@@ -35,10 +42,7 @@ namespace Lab_N2
             panel1.Width = 10000;
             panel1.Height = 10000;
             g = panel1.CreateGraphics();
-            pen = new Pen(Color.Black, 5);
-
-
-            
+            pen = new Pen(Color.Blue, 5);
 
             
 
@@ -63,15 +67,33 @@ namespace Lab_N2
             tr1.Width = 225;
             
             tr1.Dock = DockStyle.Bottom;
-            tr1.Minimum = 10;
-            tr1.Maximum = 500;
+            tr1.Minimum = 1;
+            tr1.Maximum = 255;
+
+            tr2 = new TrackBar();
+            tr2.Width = 225;
+
+            tr2.Dock = DockStyle.Bottom;
+            tr2.Minimum = 1;
+            tr2.Maximum = 255;
+
+
+
+            tr3 = new TrackBar();
+            tr3.Width = 225;
+
+            tr3.Dock = DockStyle.Bottom;
+            tr3.Minimum = 1;
+            tr3.Maximum = 255;
             //tr1.Value += new (tr_ValueChanged);
 
 
 
 
-            
+
             Controls.Add(tr1);
+            Controls.Add(tr2);
+            Controls.Add(tr3);
             Controls.Add(panel1);
 
             MainMenu menu = new MainMenu();
@@ -117,13 +139,12 @@ namespace Lab_N2
 
             Menu = menu;
 
-            //picDrawingSurface.Image = pic;
-
-
-
-
 
         }
+
+
+
+
 
         private void menuitem1_Refresh(object sender, EventArgs e)
         {
@@ -156,27 +177,49 @@ namespace Lab_N2
 
         private void tr_ValueChanged(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            r = tr1.Value;
+            TextBox1.Text = r.ToString();
+            setcolor();
+
+
         }
+        private void tr2_ValueChanged(object sender, EventArgs e)
+        {
+            v = tr2.Value;
+            TextBox1.Text = v.ToString();
+            setcolor();
+        }
+        private void tr3_ValueChanged(object sender, EventArgs e)
+        {
+            b = tr3.Value;
+            TextBox1.Text = b.ToString();
+            setcolor();
+        }
+
+
 
         private void menuitem1_2Dot(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            
         }
 
         private void menuitem1_Dot(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            
+        }
+        public void setcolor()
+        {
+
+            pen.Color = Color.FromArgb(r, v, b);
         }
 
         private void menuitem1_solid(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            setcolor();
         }
 
         private void menuitem1_Style(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
         }
 
         private void menuitem1_Pen1(object sender, EventArgs e)
@@ -225,9 +268,21 @@ namespace Lab_N2
                     (System.IO.FileStream)SaveDlg.OpenFile();
                 switch (SaveDlg.FilterIndex)
                 {
-                   // case 
-                        
+                    case 1:
+                        panel1.BackgroundImage.Save(fs, ImageFormat.Jpeg);
+                        break;
+                    case 2:
+                        panel1.BackgroundImage.Save(fs, ImageFormat.Jpeg);
+                        break;
+                    case 3:
+                        panel1.BackgroundImage.Save(fs, ImageFormat.Jpeg);
+                        break;
+                    case 4:
+                        panel1.BackgroundImage.Save(fs, ImageFormat.Jpeg);
+                        break;
+
                 }
+                fs.Close();
             
             }
         }
