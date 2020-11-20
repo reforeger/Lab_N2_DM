@@ -12,9 +12,10 @@ namespace Lab_N2
 {
     public partial class Form3 : Form
     {
-        PictureBox Picb, Picb2, Picb3, Picb4, Picb5, Picb6, Picb7, Picb8, Picb9, Picb10;
+        public PictureBox Picb, Picb2, Picb3, Picb4, Picb5, Picb6, Picb7, Picb8, Picb9, Picb10;
         TextBox textBox1;
         Color colorResult;
+        Pen pen;
         public Form3()
         {
             Text = "Colors";
@@ -128,6 +129,8 @@ namespace Lab_N2
         }*/
         private void Picb2_MouseClick(object sender, MouseEventArgs e)
         {
+            Form1 f6= new Form1();
+            
             
         }
     }

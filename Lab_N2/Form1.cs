@@ -20,21 +20,25 @@ namespace Lab_N2
         Graphics g;
         TrackBar tr1, tr2, tr3;
         Panel panel1;
+        PictureBox picboxi;
         int x = -1;
         int y = -1;
         bool moving = false;
+        bool drawing;
+        int historyCounter;
         Pen pen;
         Color historyColor;
         List<Image> History;
         TextBox TextBox1;
-        
+        Bitmap BM;
         int r = 0, v= 0, b = 0;
-        
-        
+
+        private Size _pictOriginalSize;
         public Form1()
         {
-            Bitmap pic = new Bitmap(750, 500);
-            picDrawingSurface.Image = pic;
+
+
+
             historyColor = new Color();
             History = new List<Image>();
 
@@ -42,9 +46,12 @@ namespace Lab_N2
             panel1.Width = 10000;
             panel1.Height = 10000;
             g = panel1.CreateGraphics();
-            pen = new Pen(Color.Blue, 5);
+            pen = new Pen(Color.Black, 5);
 
-            
+
+            //BM = new Bitmap(2000, 2000);
+
+
 
             panel1.BackColor = Color.White;
             panel1.Dock = DockStyle.Fill;
@@ -58,10 +65,14 @@ namespace Lab_N2
             Icon = new Icon(@"..\..\Properties\test.ico");
             Text = "Paint";
             Opacity = .95;
-            
-            
 
 
+            picboxi = new PictureBox();
+            picboxi.Dock = DockStyle.Fill;
+            picboxi.Width = 2000;
+            picboxi.Height = 2000;
+            picboxi.BackColor = Color.White;
+            
 
             tr1 = new TrackBar();
             tr1.Width = 225;
@@ -92,20 +103,22 @@ namespace Lab_N2
 
 
             Controls.Add(tr1);
-            Controls.Add(tr2);
-            Controls.Add(tr3);
+          //  Controls.Add(tr2);
+            //Controls.Add(tr3);
             Controls.Add(panel1);
-
+            Controls.Add(picboxi);
             MainMenu menu = new MainMenu();
             MenuItem menuitem1 = new MenuItem("File");
 
 
+            _pictOriginalSize = picboxi.Size;
+            tr1.Minimum = 0;
+            tr1.Maximum = 255;
 
 
 
 
 
-            
             menuitem1.MenuItems.Add("New    Ctrl + N", new EventHandler(menuitem1_New));
             menuitem1.MenuItems.Add("Refresh Ctrl + F5", new EventHandler(menuitem1_Refresh));
             menuitem1.MenuItems.Add("Open   F3", new EventHandler(menuitem1_Open));
@@ -177,9 +190,14 @@ namespace Lab_N2
 
         private void tr_ValueChanged(object sender, EventArgs e)
         {
-            r = tr1.Value;
-            TextBox1.Text = r.ToString();
-            setcolor();
+            const double MaxScale = 5.0; // The scale factor when the is at it's max
+
+            double scale = Math.Pow(MaxScale, tr1.Value / tr1.Maximum);
+
+            Size newSize = new Size((int)(_pictOriginalSize.Width * scale),
+                           (int)(_pictOriginalSize.Height * scale));
+
+            picboxi.Size = newSize;
 
 
         }
@@ -200,7 +218,7 @@ namespace Lab_N2
 
         private void menuitem1_2Dot(object sender, EventArgs e)
         {
-            
+            setcolor();
         }
 
         private void menuitem1_Dot(object sender, EventArgs e)
@@ -215,7 +233,10 @@ namespace Lab_N2
 
         private void menuitem1_solid(object sender, EventArgs e)
         {
-            setcolor();
+            pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Solid;
+
+            //menuitem1_solid.Checked = true;
+            
         }
 
         private void menuitem1_Style(object sender, EventArgs e)
@@ -236,6 +257,10 @@ namespace Lab_N2
 
         private void CreateKeyShortcut_KeyDown1(object sender, KeyEventArgs e)
         {
+            MessageBox.Show(
+            "Выберите один из вариантов",
+            "Сообщение",
+            MessageBoxButtons.YesNo);
             if ((e.Control && e.KeyCode == Keys.Control) || (e.Control && e.KeyCode == Keys.S))
             {
                 MessageBox.Show(
@@ -269,16 +294,16 @@ namespace Lab_N2
                 switch (SaveDlg.FilterIndex)
                 {
                     case 1:
-                        panel1.BackgroundImage.Save(fs, ImageFormat.Jpeg);
+                        picboxi.Image.Save(fs, ImageFormat.Jpeg);
                         break;
                     case 2:
-                        panel1.BackgroundImage.Save(fs, ImageFormat.Jpeg);
+                        picboxi.Image.Save(fs, ImageFormat.Bmp);
                         break;
                     case 3:
-                        panel1.BackgroundImage.Save(fs, ImageFormat.Jpeg);
+                        picboxi.Image.Save(fs, ImageFormat.Gif);
                         break;
                     case 4:
-                        panel1.BackgroundImage.Save(fs, ImageFormat.Jpeg);
+                        picboxi.Image.Save(fs, ImageFormat.Png);
                         break;
 
                 }
@@ -301,23 +326,16 @@ namespace Lab_N2
         }
         private void menuitem1_Exit(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Kas oled kindel", "Küsimus", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (MessageBox.Show("Вы точно хотите выйти?", "Exit", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 Dispose();
             }
         }
 
-
-
         private void menuitem1_About(object sender, EventArgs e)
         {
-
+            MessageBox.Show("Version: 1.22474487139\nProgrammer:Daniel Mihol \nAbout programm: This programm was created by very talented programmer, \nits paint but better with different functions and posabilitys.");
         }
-
-
-
-
-
     }
 }
     
