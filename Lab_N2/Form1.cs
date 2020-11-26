@@ -18,7 +18,7 @@ namespace Lab_N2
     {
         NotifyIcon ico;
         Graphics g;
-        TrackBar tr1, tr2, tr3;
+        TrackBar tr4;
         Panel panel1;
         PictureBox picboxi;
         int x = -1;
@@ -30,93 +30,80 @@ namespace Lab_N2
         Color historyColor;
         List<Image> History;
         TextBox TextBox1;
-        Bitmap BM;
-        int r = 0, v= 0, b = 0;
+        Graphics currentPath;
 
         private Size _pictOriginalSize;
         public Form1()
         {
 
 
+            InitializeComponent();
 
             historyColor = new Color();
             History = new List<Image>();
 
             panel1 = new Panel();
-            panel1.Width = 10000;
-            panel1.Height = 10000;
-            g = panel1.CreateGraphics();
+            panel1.Location = new Point(200, 1065);
+            panel1.Width = 1705;
+            panel1.Height = 55;
+            panel1.BorderStyle = BorderStyle.FixedSingle;
+            
+
+
+
             pen = new Pen(Color.Black, 5);
 
 
-            //BM = new Bitmap(2000, 2000);
+            tr4 = new TrackBar();
+            tr4.Width = 500;
+            tr4.Location = new Point(1400, 1070);
+            tr4.Minimum = 1;
+            tr4.Maximum = 1000;
 
+            Controls.Add(tr4);
+            Controls.Add(panel1);
 
-
-            panel1.BackColor = Color.White;
-            panel1.Dock = DockStyle.Fill;
-            
-            panel1.MouseDown += panel1_MouseDown;
-            panel1.MouseMove += panel1_MouseMove;
-            panel1.MouseUp += panel1_MouseUp;
 
 
 
             Icon = new Icon(@"..\..\Properties\test.ico");
-            Text = "Paint";
-            Opacity = .95;
-
+            Text = "Paint Version: 1.22474487139";
 
             picboxi = new PictureBox();
-            picboxi.Dock = DockStyle.Fill;
-            picboxi.Width = 2000;
-            picboxi.Height = 2000;
+            //picboxi.Dock = DockStyle.Fill;
+            picboxi.Location = new Point(200, 20);
+            picboxi.Width = 1700;
+            picboxi.Height = 1000;
             picboxi.BackColor = Color.White;
-            
+            picboxi.BorderStyle = BorderStyle.FixedSingle;
 
-            tr1 = new TrackBar();
-            tr1.Width = 225;
-            
-            tr1.Dock = DockStyle.Bottom;
-            tr1.Minimum = 1;
-            tr1.Maximum = 255;
+            Bitmap pic = new Bitmap(2000, 2000);
 
-            tr2 = new TrackBar();
-            tr2.Width = 225;
-
-            tr2.Dock = DockStyle.Bottom;
-            tr2.Minimum = 1;
-            tr2.Maximum = 255;
-
-
-
-            tr3 = new TrackBar();
-            tr3.Width = 225;
-
-            tr3.Dock = DockStyle.Bottom;
-            tr3.Minimum = 1;
-            tr3.Maximum = 255;
-            //tr1.Value += new (tr_ValueChanged);
+            picboxi.Image = pic;
 
 
 
 
 
-            Controls.Add(tr1);
-          //  Controls.Add(tr2);
-            //Controls.Add(tr3);
-            Controls.Add(panel1);
+
+
+
+
+
+            //Controls.Add(panel1);
             Controls.Add(picboxi);
             MainMenu menu = new MainMenu();
             MenuItem menuitem1 = new MenuItem("File");
 
 
             _pictOriginalSize = picboxi.Size;
-            tr1.Minimum = 0;
-            tr1.Maximum = 255;
 
 
 
+
+            picboxi.MouseDown += picboxi_MouseDown;
+            picboxi.MouseMove += picboxi_MouseMove;
+            picboxi.MouseUp += picboxi_MouseUp;
 
 
             menuitem1.MenuItems.Add("New    Ctrl + N", new EventHandler(menuitem1_New));
@@ -151,9 +138,10 @@ namespace Lab_N2
             
 
             Menu = menu;
-
+            g = picboxi.CreateGraphics();
 
         }
+
 
 
 
@@ -165,14 +153,14 @@ namespace Lab_N2
         }
 
 
-        private void panel1_MouseDown(object sender, MouseEventArgs e)
+        private void picboxi_MouseDown(object sender, MouseEventArgs e)
         {
             moving = true;
             x = e.X;
             y = e.Y;
         }
 
-        private void panel1_MouseMove(object sender, MouseEventArgs e)
+        private void picboxi_MouseMove(object sender, MouseEventArgs e)
         {
             if(moving && x!=-1 && y!= -1)
             {
@@ -181,54 +169,37 @@ namespace Lab_N2
                 y = e.Y;
             }
         }
-        private void panel1_MouseUp(object sender, MouseEventArgs e)
+        private void picboxi_MouseUp(object sender, MouseEventArgs e)
         {
             moving = false;
             x = -1;
             y = -1;
-        }
+            /*
+            History.RemoveRange(historyCounter + 1, History.Count - historyCounter - 1);
+            History.Add(new Bitmap(picboxi.Image));
+            if (historyCounter + 1 < 10) historyCounter++;
+            if (History.Count - 1 == 10) History.RemoveAt(0);
+            drawing = false;
+            try
+            {
+                currentPath.Dispose();
 
-        private void tr_ValueChanged(object sender, EventArgs e)
-        {
-            const double MaxScale = 5.0; // The scale factor when the is at it's max
+            }
+            catch { };
+            */
 
-            double scale = Math.Pow(MaxScale, tr1.Value / tr1.Maximum);
-
-            Size newSize = new Size((int)(_pictOriginalSize.Width * scale),
-                           (int)(_pictOriginalSize.Height * scale));
-
-            picboxi.Size = newSize;
-
-
-        }
-        private void tr2_ValueChanged(object sender, EventArgs e)
-        {
-            v = tr2.Value;
-            TextBox1.Text = v.ToString();
-            setcolor();
-        }
-        private void tr3_ValueChanged(object sender, EventArgs e)
-        {
-            b = tr3.Value;
-            TextBox1.Text = b.ToString();
-            setcolor();
         }
 
 
 
         private void menuitem1_2Dot(object sender, EventArgs e)
         {
-            setcolor();
+            
         }
 
         private void menuitem1_Dot(object sender, EventArgs e)
         {
             
-        }
-        public void setcolor()
-        {
-
-            pen.Color = Color.FromArgb(r, v, b);
         }
 
         private void menuitem1_solid(object sender, EventArgs e)
@@ -277,10 +248,17 @@ namespace Lab_N2
 
         private void menuitem1_Undo(object sender, EventArgs e)
         {
+            /*
+            if (History.Count != 0 && historyCounter != 0)
+            {
+                picboxi.Image = new Bitmap(History[--historyCounter]);
+            }
+            else MessageBox.Show("История пуста");*/
         }
 
         private void menuitem1_Save(object sender, EventArgs e)
         {
+            
             SaveFileDialog SaveDlg = new SaveFileDialog();
             SaveDlg.Filter = "JPEG Image |*.jpg|Bitmap image|*.bmp|GIF image|*.gif|PNG" +
                 "image|*.png";
@@ -334,7 +312,7 @@ namespace Lab_N2
 
         private void menuitem1_About(object sender, EventArgs e)
         {
-            MessageBox.Show("Version: 1.22474487139\nProgrammer:Daniel Mihol \nAbout programm: This programm was created by very talented programmer, \nits paint but better with different functions and posabilitys.");
+            MessageBox.Show("Version: 1.22474487139\nProgrammer:Daniel Mihol \nAbout programm: This programm was created by very talented programmer, \nits just a regular paint but with few upgreads, different functions and posabilitys.");
         }
     }
 }

@@ -16,16 +16,18 @@ namespace Lab_N2
         TextBox textBox1;
         Color colorResult;
         Pen pen;
+        TrackBar tr1, tr2, tr3;
         public Form3()
         {
             Text = "Colors";
             Icon = new Icon(@"..\..\Properties\test.ico");
-            Width = 800;
-            Height = 800;
+            Width =700;
+            Height = 700;
             Picb = new PictureBox();
-            Picb.Location = new Point(50, 50);
-            Picb.BackColor = Color.DarkGray;
-            Picb.Size = new Size(300, 260);
+            Picb.Location = new Point(450, 250);
+            Picb.BackColor = Color.Black;
+            Picb.Size = new Size(150, 150);
+            Picb.BorderStyle = BorderStyle.Fixed3D;
            
 
 
@@ -33,7 +35,6 @@ namespace Lab_N2
             Picb2.Location = new Point(80, 75);
             Picb2.Size = new Size(40, 40);
             Picb2.BackColor = Color.Blue;
-            Picb2.MouseClick += Picb2_MouseClick;
 
 
             Picb3 = new PictureBox();
@@ -90,14 +91,10 @@ namespace Lab_N2
 
 
 
-            textBox1 = new TextBox();
-            textBox1.BackColor = Color.Cyan;
-            textBox1.Location = new Point(700, 500);
-            textBox1.Size = new Size(150, 150);
-            Controls.Add(textBox1);
 
 
-            Controls.Add(Picb2);
+
+            /*Controls.Add(Picb2);
             Controls.Add(Picb3);
             Controls.Add(Picb4);
             Controls.Add(Picb5);
@@ -106,32 +103,69 @@ namespace Lab_N2
             Controls.Add(Picb8);
             Controls.Add(Picb9);
             Controls.Add(Picb10);
-            Controls.Add(textBox1);
+            */
             Controls.Add(Picb);
 
 
-            //Scroll_Red.Tag = numeric_Red;
 
+
+
+            tr1 = new TrackBar();
+            tr1.Width = 255;
+            tr1.Minimum = 1;
+            tr1.Maximum = 255;
+            tr1.Location = new Point(100, 220);
+            
+
+            tr2 = new TrackBar();
+            tr2.Width = 255;
+            tr2.Minimum = 1;
+            tr2.Maximum = 255;
+            tr2.Location = new Point(100, 290);
+
+
+
+            tr3 = new TrackBar();
+            tr3.Width = 255;
+            tr3.Minimum = 1;
+            tr3.Maximum = 255;
+            tr3.Location = new Point(100, 360);
+
+
+
+            tr1.Scroll += tr_Scroll;
+            tr2.Scroll += tr2_Scroll;
+            tr3.Scroll += tr3_Scroll;
+
+
+
+
+
+            Controls.Add(tr1);
+            Controls.Add(tr2);
+            Controls.Add(tr3);
 
         }
 
-        /*private void Scroll_Red_ValueChanged(object sender, EventArgs e)
+        private void tr_Scroll(object sender, EventArgs e)
         {
-            ScrollBar scrollBar = (ScrollBar)sender;
-            NumericUpDown numericUpDown = (NumericUpDown)scrollBar.Tag;
-            numericUpDown.Value = ScrollBar.Value;
+            Picb.BackColor = Color.FromArgb(tr1.Value, tr2.Value, tr3.Value);
         }
-        private void UpdateColor()
+        private void tr2_Scroll(object sender, EventArgs e)
         {
-            colorResult = Color.FromArgb(Scroll_Red.Value, Scroll_Green.Value,
-                Scroll_Blue.Value);
-            picResultColor.BackColor = colorResult;
+            Picb.BackColor = Color.FromArgb(tr1.Value, tr2.Value, tr3.Value);
+        }
+        private void tr3_Scroll(object sender, EventArgs e)
+        {
+            Picb.BackColor = Color.FromArgb(tr1.Value, tr2.Value, tr3.Value);
+        }
+
+        /*private void UpdateColor()
+        {
+            colorResult = Color.FromArgb(tr1.Value, tr2.Value, tr3.Value)
+            {
+
+            }
         }*/
-        private void Picb2_MouseClick(object sender, MouseEventArgs e)
-        {
-            Form1 f6= new Form1();
-            
-            
-        }
     }
 }
