@@ -18,7 +18,7 @@ namespace Lab_N2
     {
         NotifyIcon ico;
         Graphics g;
-        TrackBar tr4;
+        TrackBar tr4, tr5;
         Panel panel1;
         PictureBox picboxi;
         int x = -1;
@@ -33,41 +33,11 @@ namespace Lab_N2
         Graphics currentPath;
 
         private Size _pictOriginalSize;
-        public Form1()
+        public Form1(Color color)
         {
 
 
             InitializeComponent();
-
-            historyColor = new Color();
-            History = new List<Image>();
-
-            panel1 = new Panel();
-            panel1.Location = new Point(200, 1065);
-            panel1.Width = 1705;
-            panel1.Height = 55;
-            panel1.BorderStyle = BorderStyle.FixedSingle;
-            
-
-
-
-            pen = new Pen(Color.Black, 5);
-
-
-            tr4 = new TrackBar();
-            tr4.Width = 500;
-            tr4.Location = new Point(1400, 1070);
-            tr4.Minimum = 1;
-            tr4.Maximum = 1000;
-
-            Controls.Add(tr4);
-            Controls.Add(panel1);
-
-
-
-
-            Icon = new Icon(@"..\..\Properties\test.ico");
-            Text = "Paint Version: 1.22474487139";
 
             picboxi = new PictureBox();
             //picboxi.Dock = DockStyle.Fill;
@@ -82,8 +52,61 @@ namespace Lab_N2
             picboxi.Image = pic;
 
 
+            historyColor = new Color();
+            History = new List<Image>();
 
 
+
+            panel1 = new Panel();
+            panel1.Location = new Point(200, 1065);
+            panel1.Width = 1705;
+            panel1.Height = 55;
+            panel1.BorderStyle = BorderStyle.FixedSingle;
+            
+
+
+
+            pen = new Pen(Color.Black, 1);
+
+
+            tr4 = new TrackBar();
+            tr4.Width = 500;
+            tr4.Location = new Point(1400, 1070);
+            tr4.Minimum = 1;
+            tr4.Maximum = 1000;
+
+            tr5 = new TrackBar();
+            tr5.Width = 500;
+            tr5.Location = new Point(210, 1070);
+            tr5.Minimum = 1;
+            tr5.Maximum = 50;
+            tr5.Scroll += tr5_Scroll;
+
+
+
+            Label lbl = new Label();
+            lbl.Location = new Point(1630, 1040);
+            lbl.Text = "Zoom";
+            lbl.ForeColor = Color.Black;
+
+
+            Controls.Add(tr5);
+            Controls.Add(tr4);
+            Controls.Add(lbl);
+            Controls.Add(panel1);
+
+
+
+
+            Icon = new Icon(@"..\..\Properties\test.ico");
+            Text = "Cheap Paint";
+
+
+
+
+            
+
+            
 
 
 
@@ -144,12 +167,15 @@ namespace Lab_N2
 
 
 
-
+        private void tr5_Scroll(object sender, EventArgs e)
+        {
+            pen.Width = tr5.Value;
+        }
 
 
         private void menuitem1_Refresh(object sender, EventArgs e)
         {
-            panel1.Refresh();
+            picboxi.Refresh();
         }
 
 
@@ -212,6 +238,7 @@ namespace Lab_N2
 
         private void menuitem1_Style(object sender, EventArgs e)
         {
+
         }
 
         private void menuitem1_Pen1(object sender, EventArgs e)
@@ -314,6 +341,7 @@ namespace Lab_N2
         {
             MessageBox.Show("Version: 1.22474487139\nProgrammer:Daniel Mihol \nAbout programm: This programm was created by very talented programmer, \nits just a regular paint but with few upgreads, different functions and posabilitys.");
         }
+
     }
 }
     

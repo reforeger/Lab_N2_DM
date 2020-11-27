@@ -17,8 +17,14 @@ namespace Lab_N2
         Color colorResult;
         Pen pen;
         TrackBar tr1, tr2, tr3;
-        public Form3()
+        public Form3(string data)
         {
+            
+
+
+
+
+
             Text = "Colors";
             Icon = new Icon(@"..\..\Properties\test.ico");
             Width =700;
@@ -107,7 +113,11 @@ namespace Lab_N2
             Controls.Add(Picb);
 
 
-
+            Button btn1 = new Button();
+            btn1.Location = new Point(100, 100);
+            btn1.Text = "BUTT";
+            btn1.Click += btn1_Click;
+            Controls.Add(btn1);
 
 
             tr1 = new TrackBar();
@@ -159,13 +169,10 @@ namespace Lab_N2
         {
             Picb.BackColor = Color.FromArgb(tr1.Value, tr2.Value, tr3.Value);
         }
-
-        /*private void UpdateColor()
+        private void btn1_Click(object sender, EventArgs e)
         {
-            colorResult = Color.FromArgb(tr1.Value, tr2.Value, tr3.Value)
-            {
-
-            }
-        }*/
+            //Form f5 = new Form();
+            
+        }
     }
 }

@@ -8,6 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.Drawing;
+
 namespace Lab_N2.Properties
 {
 
@@ -26,5 +28,7 @@ namespace Lab_N2.Properties
                 return defaultInstance;
             }
         }
+
+        public Color FormBackground { get; internal set; }
     }
 }
