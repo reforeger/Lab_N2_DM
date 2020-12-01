@@ -32,7 +32,8 @@
             // 
             // Form1
             // 
-            this.ClientSize = new System.Drawing.Size(1008, 779);
+            this.AutoScroll = true;
+            this.ClientSize = new System.Drawing.Size(961, 369);
             this.Name = "Form1";
             this.ResumeLayout(false);
 

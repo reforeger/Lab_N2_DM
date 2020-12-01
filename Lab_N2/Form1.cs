@@ -1,4 +1,4 @@
-﻿using Amazon.SimpleWorkflow.Model;
+﻿
 using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
@@ -33,10 +33,8 @@ namespace Lab_N2
         Graphics currentPath;
 
         private Size _pictOriginalSize;
-        public Form1(Color color)
+        public Form1()
         {
-
-
             InitializeComponent();
 
             picboxi = new PictureBox();
@@ -158,7 +156,14 @@ namespace Lab_N2
             menu.MenuItems.Add(menuitem1);
             menu.MenuItems.Add(menuitem2);
             menu.MenuItems.Add(menuitem3);
-            
+
+
+
+
+
+
+
+
 
             Menu = menu;
             g = picboxi.CreateGraphics();
@@ -243,8 +248,8 @@ namespace Lab_N2
 
         private void menuitem1_Pen1(object sender, EventArgs e)
         {
-            Form3 f2 = new Form3();
-            f2.ShowDialog();
+            //Form3 f2 = new Form3();
+            //f2.ShowDialog();
         }
 
         private void menuitem1_New(object sender, EventArgs e)
