@@ -170,14 +170,14 @@ namespace Lab_N2
 
 
             ToolStripButton toolStripButton1 = new ToolStripButton();
-            toolStripButton1.Image = Bitmap.FromFile(@"..\..\Properties\test.ico");
-            toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.ImageAndText;
-            toolStripButton1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            toolStripButton1.Image = Bitmap.FromFile(@"..\..\Properties\pilt.jpg");
+            toolStripButton1.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
+            toolStripButton1.ImageAlign = ContentAlignment.MiddleLeft;
             toolStripButton1.Name = "toolStripButton1";
             toolStripButton1.Text = "&New";
-            toolStripButton1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
-
+            toolStripButton1.TextAlign = ContentAlignment.MiddleRight;
+            toolStripButton1.Click += new EventHandler(this.toolStripButton1_Click);
+            
 
 
         }
@@ -195,6 +195,7 @@ namespace Lab_N2
 
         private void menuitem1_Refresh(object sender, EventArgs e)
         {
+
             picboxi.Refresh();
         }
 
@@ -353,6 +354,7 @@ namespace Lab_N2
 
         private void menuitem1_Exit(object sender, EventArgs e)
         {
+
             if (picboxi.Image != null)
             {
                 var result = MessageBox.Show("Save picture pls, -_- before close", "Warning", MessageBoxButtons.YesNoCancel);
@@ -368,12 +370,19 @@ namespace Lab_N2
 
         }
 
-        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        private void Form1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                Dispose();
+            }
+        }
+
+        private void toolStripButton1_Click_1(object sender, EventArgs e)
         {
 
-            MessageBox.Show("Вы точно хотите выйти?");
-            
         }
+
 
         private void menuitem1_About(object sender, EventArgs e)
         {
