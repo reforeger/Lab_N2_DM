@@ -17,7 +17,7 @@ namespace Lab_N2
         Color colorResult;
         Pen pen;
         TrackBar tr1, tr2, tr3;
-        public Form3(string data)
+        public Form3()
         {
             
 

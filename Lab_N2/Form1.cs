@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
@@ -21,16 +22,13 @@ namespace Lab_N2
         TrackBar tr4, tr5;
         Panel panel1;
         PictureBox picboxi;
-        int x = -1;
-        int y = -1;
-        bool moving = false;
         bool drawing;
         int historyCounter;
         Pen pen;
         Color historyColor;
         List<Image> History;
-        TextBox TextBox1;
-        Graphics currentPath;
+        Point oldLocation;
+        GraphicsPath currentPath1;
 
         private Size _pictOriginalSize;
         public Form1()
@@ -60,11 +58,12 @@ namespace Lab_N2
             panel1.Width = 1705;
             panel1.Height = 55;
             panel1.BorderStyle = BorderStyle.FixedSingle;
-            
+
 
 
 
             pen = new Pen(Color.Black, 1);
+            drawing = false;
 
 
             tr4 = new TrackBar();
@@ -102,9 +101,9 @@ namespace Lab_N2
 
 
 
-            
 
-            
+
+
 
 
 
@@ -137,7 +136,7 @@ namespace Lab_N2
             menuitem2.MenuItems.Add("Reno   Ctrl + Shift + Z", new EventHandler(menuitem1_Reno));
             MenuItem menuitem5 = new MenuItem("Pen");
             MenuItem menuitem6 = new MenuItem("Style");
-            
+
             menuitem5.MenuItems.Add("Color", new EventHandler(menuitem1_Pen1));
             menuitem6.MenuItems.Add("Solid", new EventHandler(menuitem1_solid));
             menuitem6.MenuItems.Add("Dot", new EventHandler(menuitem1_Dot));
@@ -168,9 +167,25 @@ namespace Lab_N2
             Menu = menu;
             g = picboxi.CreateGraphics();
 
+
+
+            ToolStripButton toolStripButton1 = new ToolStripButton();
+            toolStripButton1.Image = Bitmap.FromFile(@"..\..\Properties\test.ico");
+            toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.ImageAndText;
+            toolStripButton1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            toolStripButton1.Name = "toolStripButton1";
+            toolStripButton1.Text = "&New";
+            toolStripButton1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+
+
+
         }
 
-
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
 
         private void tr5_Scroll(object sender, EventArgs e)
         {
@@ -183,54 +198,63 @@ namespace Lab_N2
             picboxi.Refresh();
         }
 
-
         private void picboxi_MouseDown(object sender, MouseEventArgs e)
         {
-            moving = true;
-            x = e.X;
-            y = e.Y;
-        }
-
-        private void picboxi_MouseMove(object sender, MouseEventArgs e)
-        {
-            if(moving && x!=-1 && y!= -1)
+            if (picboxi.Image == null)
             {
-                g.DrawLine(pen, new Point(x, y), e.Location);
-                x = e.X;
-                y = e.Y;
+                MessageBox.Show("Save First");
+                return;
+            }
+            if (e.Button == MouseButtons.Left)
+            {
+                drawing = true;
+                oldLocation = e.Location;
+                currentPath1 = new GraphicsPath();
             }
         }
+
         private void picboxi_MouseUp(object sender, MouseEventArgs e)
         {
-            moving = false;
-            x = -1;
-            y = -1;
             /*
             History.RemoveRange(historyCounter + 1, History.Count - historyCounter - 1);
             History.Add(new Bitmap(picboxi.Image));
             if (historyCounter + 1 < 10) historyCounter++;
-            if (History.Count - 1 == 10) History.RemoveAt(0);
+            if (History.Count - 1 == 10) History.RemoveAt(0);*/
             drawing = false;
             try
             {
-                currentPath.Dispose();
-
+                currentPath1.Dispose();
             }
             catch { };
-            */
-
         }
 
+        private void picboxi_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (drawing)
+            {
+                Graphics g = Graphics.FromImage(picboxi.Image);
+                currentPath1.AddLine(oldLocation, e.Location);
+                g.DrawPath(pen, currentPath1);
+                oldLocation = e.Location;
+                g.Dispose();
+                picboxi.Invalidate();
+                if (e.Button == MouseButtons.Right)
+                {
+                    currentPath1.Dispose();
+                }
+            }
+
+        }
 
 
         private void menuitem1_2Dot(object sender, EventArgs e)
         {
-            
+
         }
 
         private void menuitem1_Dot(object sender, EventArgs e)
         {
-            
+
         }
 
         private void menuitem1_solid(object sender, EventArgs e)
@@ -238,7 +262,7 @@ namespace Lab_N2
             pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Solid;
 
             //menuitem1_solid.Checked = true;
-            
+
         }
 
         private void menuitem1_Style(object sender, EventArgs e)
@@ -248,49 +272,40 @@ namespace Lab_N2
 
         private void menuitem1_Pen1(object sender, EventArgs e)
         {
-            //Form3 f2 = new Form3();
-            //f2.ShowDialog();
+            Form3 f2 = new Form3();
+            f2.ShowDialog();
         }
 
         private void menuitem1_New(object sender, EventArgs e)
         {
+            History.Clear();
+            historyCounter = 0;
+            Bitmap pic = new Bitmap(750, 500);
+            picboxi.Image = pic;
+            History.Add(new Bitmap(picboxi.Image));
             Form1 f = new Form1();
             f.ShowDialog();
         }
 
-        private void CreateKeyShortcut_KeyDown1(object sender, KeyEventArgs e)
-        {
-            MessageBox.Show(
-            "Выберите один из вариантов",
-            "Сообщение",
-            MessageBoxButtons.YesNo);
-            if ((e.Control && e.KeyCode == Keys.Control) || (e.Control && e.KeyCode == Keys.S))
-            {
-                MessageBox.Show(
-                "Выберите один из вариантов",
-                "Сообщение",
-                MessageBoxButtons.YesNo);
-            }
-        }
 
         private void menuitem1_Reno(object sender, EventArgs e)
         {
-            
+
         }
 
         private void menuitem1_Undo(object sender, EventArgs e)
         {
-            /*
+
             if (History.Count != 0 && historyCounter != 0)
             {
                 picboxi.Image = new Bitmap(History[--historyCounter]);
             }
-            else MessageBox.Show("История пуста");*/
+            else MessageBox.Show("История пуста");
         }
 
         private void menuitem1_Save(object sender, EventArgs e)
         {
-            
+
             SaveFileDialog SaveDlg = new SaveFileDialog();
             SaveDlg.Filter = "JPEG Image |*.jpg|Bitmap image|*.bmp|GIF image|*.gif|PNG" +
                 "image|*.png";
@@ -318,7 +333,7 @@ namespace Lab_N2
 
                 }
                 fs.Close();
-            
+
             }
         }
 
@@ -331,22 +346,39 @@ namespace Lab_N2
             open.FilterIndex = 1;
             if (open.ShowDialog() != DialogResult.OK)
             {
-                
+
             }
         }
+
+
         private void menuitem1_Exit(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Вы точно хотите выйти?", "Exit", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (picboxi.Image != null)
             {
-                Dispose();
+                var result = MessageBox.Show("Save picture pls, -_- before close", "Warning", MessageBoxButtons.YesNoCancel);
+
+                switch (result)
+                {
+                    case DialogResult.No: Dispose(); break ;
+                    case DialogResult.Yes: menuitem1_Save(sender, e); break;
+                    case DialogResult.Cancel: return;
+
+                }
             }
+
+        }
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+
+            MessageBox.Show("Вы точно хотите выйти?");
+            
         }
 
         private void menuitem1_About(object sender, EventArgs e)
         {
             MessageBox.Show("Version: 1.22474487139\nProgrammer:Daniel Mihol \nAbout programm: This programm was created by very talented programmer, \nits just a regular paint but with few upgreads, different functions and posabilitys.");
         }
-
     }
 }
     
