@@ -171,7 +171,8 @@ namespace Lab_N2
         }
         private void btn1_Click(object sender, EventArgs e)
         {
-            //Form f5 = new Form();
+            colorResult = new Color();
+            colorResult = Picb.BackColor;
             
         }
     }
