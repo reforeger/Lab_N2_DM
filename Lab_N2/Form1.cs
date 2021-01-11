@@ -39,11 +39,11 @@ namespace Lab_N2
             //picboxi.Dock = DockStyle.Fill;
             picboxi.Location = new Point(200, 20);
             picboxi.Width = 1700;
-            picboxi.Height = 1000;
+            picboxi.Height = 875;
             picboxi.BackColor = Color.White;
             picboxi.BorderStyle = BorderStyle.FixedSingle;
 
-            Bitmap pic = new Bitmap(2000, 2000);
+            Bitmap pic = new Bitmap(1980, 1080);
 
             picboxi.Image = pic;
 
@@ -54,7 +54,7 @@ namespace Lab_N2
 
 
             panel1 = new Panel();
-            panel1.Location = new Point(200, 1065);
+            panel1.Location = new Point(200, 925);
             panel1.Width = 1705;
             panel1.Height = 55;
             panel1.BorderStyle = BorderStyle.FixedSingle;
@@ -68,13 +68,13 @@ namespace Lab_N2
 
             tr4 = new TrackBar();
             tr4.Width = 500;
-            tr4.Location = new Point(1400, 1070);
+            tr4.Location = new Point(1400, 930);
             tr4.Minimum = 1;
             tr4.Maximum = 1000;
 
             tr5 = new TrackBar();
             tr5.Width = 500;
-            tr5.Location = new Point(210, 1070);
+            tr5.Location = new Point(210, 930);
             tr5.Minimum = 1;
             tr5.Maximum = 50;
             tr5.Scroll += tr5_Scroll;
@@ -82,7 +82,7 @@ namespace Lab_N2
 
 
             Label lbl = new Label();
-            lbl.Location = new Point(1630, 1040);
+            lbl.Location = new Point(1630, 900);
             lbl.Text = "Zoom";
             lbl.ForeColor = Color.Black;
 
@@ -197,6 +197,7 @@ namespace Lab_N2
         {
 
             picboxi.Refresh();
+            
         }
 
         private void picboxi_MouseDown(object sender, MouseEventArgs e)
@@ -345,11 +346,14 @@ namespace Lab_N2
                 "image|*.png";
             open.Title = "Open an Image File";
             open.FilterIndex = 1;
-            if (open.ShowDialog() != DialogResult.OK)
+            if (open.ShowDialog() != DialogResult.Cancel)
             {
-
+                picboxi.Load(open.FileName);
+                
             }
+            
         }
+        
 
 
         private void menuitem1_Exit(object sender, EventArgs e)
