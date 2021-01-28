@@ -21,16 +21,17 @@ namespace Lab_N2
         Graphics g;
         TrackBar tr4, tr5;
         Panel panel1;
-        PictureBox picboxi;
+        PictureBox picboxi, Picb;
         bool drawing;
         int historyCounter;
-        Pen pen;
-        Color historyColor;
+        public Pen pen;
         List<Image> History;
         Point oldLocation;
         GraphicsPath currentPath1;
 
         private Size _pictOriginalSize;
+        public Color colorResult;
+
         public Form1()
         {
             InitializeComponent();
@@ -48,7 +49,6 @@ namespace Lab_N2
             picboxi.Image = pic;
 
 
-            historyColor = new Color();
             History = new List<Image>();
 
 
@@ -87,11 +87,24 @@ namespace Lab_N2
             lbl.ForeColor = Color.Black;
 
 
+
+
+
+
+
+
+
+
+
+
+
+
             Controls.Add(tr5);
             Controls.Add(tr4);
             Controls.Add(lbl);
             Controls.Add(panel1);
 
+            
 
 
 
@@ -112,6 +125,9 @@ namespace Lab_N2
 
             //Controls.Add(panel1);
             Controls.Add(picboxi);
+
+
+
             MainMenu menu = new MainMenu();
             MenuItem menuitem1 = new MenuItem("File");
 
@@ -181,6 +197,11 @@ namespace Lab_N2
 
 
         }
+
+
+
+
+
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
